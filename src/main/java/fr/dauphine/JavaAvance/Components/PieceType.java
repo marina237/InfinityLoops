@@ -11,7 +11,7 @@ import java.util.LinkedList;
  */
 public enum PieceType {
 	// Each Type has a number of connectors and a specific value
-	
+//Enlever les (i) comme pour Orientation !!!!!!	
 VOID(0),
 ONE_NEIGHBOUR(1),
 BAR(2),
