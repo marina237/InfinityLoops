@@ -16,26 +16,47 @@ public enum Orientation {
 	 * la class enum va associer une valeur a l orientation
 	 */
 	
-	NORTH(0), //0
-	EAST(1),  //1
-	SOUTH(2), //2
-	WEST(3)  //3
+	NORTH, //0
+	EAST,  //1
+	SOUTH, //2
+	WEST  //3
 ;
-	/**
-	 * Creation champ numero de l orientation
-	 */
-	private int value;
-	
-	
-	Orientation(int nb) {
-		// TODO Auto-generated constructor stub
+
+
+	static Orientation getOrifromValue(int orientationValue) {
+		Orientation orientation = null;
 		
-		this.value = nb;
+		switch (orientationValue) {
+		case 0: 
+			orientation = Orientation.NORTH;
+			break;
+			
+		case 1: 
+			orientation = Orientation.EAST;
+			break;
+			
+			
+		case 2: 
+			orientation = Orientation.SOUTH;
+			break;
+			
+		case 3: 
+			orientation =Orientation.WEST;
+			break;
+			
+			
+	
+		
+		default:
+			throw new IllegalArgumentException("Unexpected value : " + orientationValue);
+		}
+		
+		return orientation;
 	}
 
-
-	public int getValue() {
-		return value;
+	int getValue() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 
