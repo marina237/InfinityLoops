@@ -138,7 +138,7 @@ static PieceType getTypefromValue(int typeValue) {
 		break;
 		
 	case 1: 
-		pieceType = PieceType.ONE_NEIGHBOUR;
+		pieceType = PieceType.ONECONN;
 		break;
 		
 		
@@ -147,16 +147,16 @@ static PieceType getTypefromValue(int typeValue) {
 		break;
 		
 	case 3: 
-		pieceType =PieceType.T;
+		pieceType =PieceType.TTYPE;
 		break;
 		
 		
 	case 4: 
-		pieceType =PieceType.CROSS;
+		pieceType =PieceType.FOURCONN;
 		break;
 		
 	case 5: 
-		pieceType =PieceType.L;
+		pieceType =PieceType.LTYPE;
 		break;
 	
 	default:
