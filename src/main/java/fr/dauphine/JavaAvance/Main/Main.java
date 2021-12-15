@@ -59,9 +59,12 @@ public class Main {
             height = Integer.parseInt(gridformat[1]); 
             if(! cmd.hasOption("o")) throw new ParseException("Missing mandatory --output argument.");
             outputFile = cmd.getOptionValue( "o" );
-
+            
+            
             // generate grid and store it to outputFile...
-            //...            
+            //...         
+            
+           
         }
         else if( cmd.hasOption( "s" ) ) {
             System.out.println("Running phineloop solver.");
@@ -69,9 +72,11 @@ public class Main {
             if(! cmd.hasOption("o")) throw new ParseException("Missing mandatory --output argument.");      
             outputFile = cmd.getOptionValue( "o" );
             boolean solved = false; 
-        
+                    
             // load grid from inputFile, solve it and store result to outputFile...
             // ...
+            
+            
             
             System.out.println("SOLVED: " + solved);            
         }
