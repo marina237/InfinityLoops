@@ -29,7 +29,7 @@ public enum PieceType {
     }
 	
 	
-	 public int getNbConnectors() { return nbOfConnectors; } //accèder au nombre de connecteur
+	 public int getNbConnectors() { return nbOfConnectors; } //acceder au nombre de connecteur
 	 public double SpecificValue() { return SpecificValue; }
 
 
