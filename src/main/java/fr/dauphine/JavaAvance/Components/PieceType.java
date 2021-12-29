@@ -47,10 +47,7 @@ public  Orientation getOrientation(Orientation orientation) {
 
 }
 
-LinkedList<Orientation> setConnectorsList(Orientation north) {
-	// TODO Auto-generated method stub
-	return null;
-}
+
 /**
  * 
  *  @return Orientation possible pour une piece
@@ -81,7 +78,7 @@ ArrayList<Orientation> getListOfPossibleOri() {
 			O.add(n);
 			break;	
 		default :
-			throw new IllegalArgumentException("Ce type de pièce n'existe pas");
+			throw new IllegalArgumentException("Ce type de piï¿½ce n'existe pas");
 	 	}
 	 	return O;
 	 }
@@ -127,7 +124,7 @@ static PieceType getTypefromValue(int typeValue) {
  * Methode statique car: 
  * 1. on envoi un entier
  * 2. on creer l 'obj Piece Type
- * ==>  "est-il logique d'appeler cette méthode, même si aucun Obj n'a encore été construit?" oui . 
+ * ==>  "est-il logique d'appeler cette mï¿½thode, mï¿½me si aucun Obj n'a encore ï¿½tï¿½ construit?" oui . 
  * Donc c est une methode statique
  */
 	PieceType pieceType = null;
@@ -164,6 +161,19 @@ static PieceType getTypefromValue(int typeValue) {
 	}
 	
 	return pieceType;
+}
+
+
+LinkedList<Orientation> setConnectorsList(Orientation north) {
+	
+	
+	LinkedList<Orientation> connectorsList = new LinkedList<Orientation>();
+	
+	
+	connectorsList.add(north);
+	
+	return connectorsList;
+		
 }
 
 
