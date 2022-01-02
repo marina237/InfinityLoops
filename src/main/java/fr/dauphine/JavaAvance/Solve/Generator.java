@@ -261,7 +261,110 @@ public class Generator {
 	}//fin de PutPieceInBordelColumn
 	
 	public static void PutPieceInBorderLine(int line, int column, Piece p, Grid inputGrid){
-		//en cours de construction
+		Random random = new Random();	
+		//ligne du haut 
+		if (line == 0 && column > 0 && column < inputGrid.getWidth() -1 ){
+			if (inputGrid.getPiece(line, column - 1).hasRightConnector() == true) { //EAST connector
+				EnumSet<PieceType> line_up_east_true = EnumSet.of(PieceType.ONECONN, PieceType.BAR, PieceType.TTYPE, PieceType.LTYPE);			
+				p.setType((PieceType) line_up_east_true.toArray()[random.nextInt(line_up_east_true.toArray().length)]);
+				switch (p.getType()){
+					case ONECONN : 
+						p.setOrientation(3);
+						break;
+					case BAR : 
+						p.setOrientation(1);
+						break;
+					case TTYPE : 
+					case LTYPE : 
+						p.setOrientation(2);
+						break;
+					default : 
+						break;
+				}
+			} else if (inputGrid.getPiece(line, column - 1).hasRightConnector() == false){
+				EnumSet<PieceType> line_up_east_false = EnumSet.of(PieceType.ONECONN, PieceType.LTYPE, PieceType.VOID);			
+				p.setType((PieceType) line_up_east_false.toArray()[random.nextInt(line_up_east_false.toArray().length)]);
+				switch(p.getType()){
+					case ONECONN : 
+						p.setOrientation(random.nextInt(3-1) + 1);//nombre entre 1(inclus) et 3(exclu) donc entre 1 et 2 
+						break;
+					case LTYPE : 
+						p.setOrientation(1);
+						break;
+					case VOID : 
+						p.setOrientation(0);
+						break;
+					default : 
+						break;
+				}
+			}				
+		}
+		//ligne du bas
+		else if (line == inputGrid.getHeight() -1 && column > 0 && column < inputGrid.getWidth() -1){
+			//EAST TRUE AND SOUTH TRUE
+			if(inputGrid.getPiece(line, column - 1).hasRightConnector() == true){
+				if (inputGrid.getPiece(line - 1, column).hasBottomConnector() == true){
+					EnumSet<PieceType> line_down_east_true_south_true = EnumSet.of(PieceType.TTYPE, PieceType.LTYPE);			
+					p.setType((PieceType) line_down_east_true_south_true.toArray()[random.nextInt(line_down_east_true_south_true.toArray().length)]);
+					switch(p.getType()){
+						case TTYPE : 
+							p.setOrientation(0);
+							break;
+						case LTYPE : 
+							p.setOrientation(3);
+							break;	
+						default : 
+							break; 
+					}
+					
+				}
+				//EAST TRUE AND SOUTH FALSE
+				else if(inputGrid.getPiece(line - 1, column).hasBottomConnector() == false){
+					EnumSet<PieceType> line_down_east_true_south_false = EnumSet.of(PieceType.ONECONN, PieceType.BAR);			
+					p.setType((PieceType) line_down_east_true_south_false.toArray()[random.nextInt(line_down_east_true_south_false.toArray().length)]);
+					switch(p.getType()){
+						case ONECONN : 
+							p.setOrientation(3);
+							break;
+						case BAR : 
+							p.setOrientation(1);
+							break;	
+						default : 
+							break; 
+					}
+				}
+			}//EAST FALSE AND SOUTH TRUE
+			else if (inputGrid.getPiece(line, column - 1).hasRightConnector() == false){
+				if (inputGrid.getPiece(line - 1, column).hasBottomConnector() == true){
+					EnumSet<PieceType> line_down_east_false_south_true = EnumSet.of(PieceType.ONECONN, PieceType.LTYPE);			
+					p.setType((PieceType) line_down_east_false_south_true.toArray()[random.nextInt(line_down_east_false_south_true.toArray().length)]);
+					switch(p.getType()){
+						case ONECONN : 
+						case LTYPE : 
+							p.setOrientation(0);
+							break;
+						default : 
+							break; 
+					}
+				}
+				//EAST FALSE AND SOUTH FALSE
+				else if (inputGrid.getPiece(line - 1, column).hasBottomConnector() == false){
+					EnumSet<PieceType> line_down_east_false_south_false = EnumSet.of(PieceType.ONECONN, PieceType.VOID);			
+					p.setType((PieceType) line_down_east_false_south_false.toArray()[random.nextInt(line_down_east_false_south_false.toArray().length)]);
+					switch(p.getType()){
+						case ONECONN : 
+							p.setOrientation(1);
+							break;
+						case VOID : 
+							p.setOrientation(0);
+							break;
+						default : 
+							break; 
+					}
+				}
+			}
+		}
+		inputGrid.setPiece(line, column, p);
 	}//fin de PutPieceInBordelLine
 	
 	
