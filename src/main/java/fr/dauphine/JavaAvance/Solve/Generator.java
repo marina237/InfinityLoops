@@ -120,10 +120,8 @@ public class Generator {
 					/*case ONECONN -> p.setOrientation(0);
 					case LTYPE -> p.setOrientation(0);
 					default -> break; */
-					case ONECONN : 
-						p.setOrientation(0);
-						break;
-					case LTYPE :
+					case ONECONN :
+					case LTYPE : 
 						p.setOrientation(0);
 						break;
 					default : 
@@ -176,12 +174,93 @@ public class Generator {
 	}//fin de PutPieceInCorner
 	
 	
-	public static void PutPieceInBordelColumn(int line, int column, Piece p, Grid inputGrid){
-		//en cours de construction
+	public static void PutPieceInBorderColumn(int line, int column, Piece p, Grid inputGrid){
+		Random random = new Random();	
+		//colonne à gauche (premiere colonne, ligne sauf premire ligne et derniere ligne 
+		if (column == 0 && line > 0 && line < inputGrid.getHeight() -1 ){
+			if (inputGrid.getPiece(line - 1, column).hasBottomConnector() == true) { //SOUTH connector 
+				EnumSet<PieceType> left_column_south_true = EnumSet.of(PieceType.ONECONN, PieceType.BAR, PieceType.TTYPE, PieceType.LTYPE);			
+				p.setType((PieceType) left_column_south_true.toArray()[random.nextInt(left_column_south_true.toArray().length)]);
+				switch(p.getType()){
+					case ONECONN : 
+					case BAR : 
+					case LTYPE : 
+						p.setOrientation(0);
+						break; 
+					case TTYPE : 
+						p.setOrientation(1);
+						break;	
+					default : 
+						break; 	
+				}
+			} 
+			else if (inputGrid.getPiece(line - 1, column).hasBottomConnector() == false){
+				EnumSet<PieceType> left_column_south_false = EnumSet.of(PieceType.ONECONN, PieceType.LTYPE, PieceType.VOID);			
+				p.setType((PieceType) left_column_south_false.toArray()[random.nextInt(left_column_south_false.toArray().length)]);
+				switch(p.getType()){
+					case ONECONN : 
+						p.setOrientation(random.nextInt(3-1) + 1);//nombre entre 1(inclus) et 3(exclu) donc entre 1 et 2 
+						break;
+					case LTYPE : 
+						p.setOrientation(1);
+						break; 
+					case VOID : 
+						p.setOrientation(1);
+						break;
+					default :
+						break;
+				}
+			
+			}
+		else if (column == inputGrid.getWidth() -1  && line > 0 && line < inputGrid.getHeight() -1 ){ //colonne de droite  
+			if (inputGrid.getPiece(line - 1, column).hasBottomConnector() == true){ //SOUTH 
+				if (inputGrid.getPiece(line, column - 1).hasRightConnector() == true) { //EAST
+					EnumSet<PieceType> right_column_southeast_true = EnumSet.of(PieceType.TTYPE, PieceType.LTYPE);			
+					p.setType((PieceType) right_column_southeast_true.toArray()[random.nextInt(right_column_southeast_true.toArray().length)]);
+					p.setOrientation(3);
+				}
+				else if (inputGrid.getPiece(line, column - 1).hasRightConnector() == false) { // pas de co
+					EnumSet<PieceType> right_column_south_true_east_false = EnumSet.of(PieceType.ONECONN, PieceType.BAR);			
+					p.setType((PieceType) right_column_south_true_east_false.toArray()[random.nextInt(right_column_south_true_east_false.toArray().length)]);
+					p.setOrientation(0);
+				}
+				
+			}
+			else if (inputGrid.getPiece(line - 1, column).hasBottomConnector() == false){ //SOUTH
+				if (inputGrid.getPiece(line, column - 1).hasRightConnector() == true){ //EAST 
+					EnumSet<PieceType> right_column_south_false_east_true = EnumSet.of(PieceType.ONECONN, PieceType.LTYPE);			
+					p.setType((PieceType) right_column_south_false_east_true.toArray()[random.nextInt(right_column_south_false_east_true.toArray().length)]);
+					switch(p.getType()){
+						case ONECONN : 
+							p.setOrientation(3);
+							break; 
+						case LTYPE : 
+							p.setOrientation(2);
+							break; 
+						default : 
+							break;
+					}
+				}else if (inputGrid.getPiece(line, column - 1).hasRightConnector() == false){
+					EnumSet<PieceType> right_column_south_false_east_false = EnumSet.of(PieceType.ONECONN, PieceType.VOID);			
+					p.setType((PieceType) right_column_south_false_east_false.toArray()[random.nextInt(right_column_south_false_east_false.toArray().length)]);
+					switch(p.getType()){
+						case ONECONN : 
+							p.setOrientation(2);
+							break; 
+						case VOID : 
+							p.setOrientation(0);
+							break; 
+						default : 
+							break;
+						}
+					}
+				}
+			}
+		}
+		inputGrid.setPiece(line, column, p);
 	}//fin de PutPieceInBordelColumn
 	
-	
-	public static void PutPieceInBordelLine(int line, int column, Piece p, Grid inputGrid){
+	public static void PutPieceInBorderLine(int line, int column, Piece p, Grid inputGrid){
 		//en cours de construction
 	}//fin de PutPieceInBordelLine
 	
