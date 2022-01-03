@@ -62,7 +62,7 @@ public class Generator {
 				br.write("Height of the grid h :" + filledGrid.getHeight());
 				br.newLine();  
 				for (int i = 0; i < filledGrid.getHeight(); i ++) {
-					for (int j = 0; i < filledGrid.getWidth(); j ++) {
+					for (int j = 0; j < filledGrid.getWidth(); j ++) {
 						//il faut rajouter la commande qui permet de chercher le type et l'orientation
 						br.write("Piece number" + ""+ "and Piece Orientation Number adjust" + ""); //
 						br.newLine();  
@@ -522,9 +522,18 @@ public class Generator {
 	 * @return grid 
 	 */
 	public static Grid Mixed (Grid grid){
+		Random random = new Random();	
 		//en cours de construction
-		return grid;
-		} 
+		//pour chaque piece dans grid.getAllPieces()
+		//Piece[][] array avec que les x et  array avec que les y 
+		//en cours de construction
+		for (Piece[] x : grid.getAllPieces()) { // pour chaque x dans get.allPieces
+			for (Piece y : x){
+				y.setOrientation(random.nextInt(3)); // valeur aléatoire entre 0, 1, 2 ou 3
+			}
+		}		
+	return grid;
+	} 
 	
 	
 	public static int[] copyGrid(Grid filledGrid, Grid inputGrid, int i, int j) {
