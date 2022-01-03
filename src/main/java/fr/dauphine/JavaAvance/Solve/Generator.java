@@ -1,6 +1,13 @@
 package fr.dauphine.JavaAvance.Solve;
 
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.EnumSet;
 import java.util.Random;
 
@@ -26,9 +33,49 @@ public class Generator {
 	 * @throws FileNotFoundException
 	 * @throws UnsupportedEncodingException
 	 */
-	public static void generateLevel(String fileName, Grid inputGrid) {
+	public static void generateLevel(String fileName, Grid inputGrid) throws IOException {
       
 		// To be implemented
+		for (int i = 0; i < inputGrid.getHeight(); i ++) {
+			for (int j = 0; i < inputGrid.getWidth(); j ++) {
+				
+				if (inputGrid.isCorner(i, j) == true){
+					PutPieceInCorner(i, j, new Piece(i, j), inputGrid);
+				}
+				else if (inputGrid.isBorderColumn(i, j) == true ){
+					PutPieceInBorderColumn(i, j, new Piece(i, j), inputGrid);
+				}
+				else if(inputGrid.isBorderLine(i, j) == true) {
+					PutPieceInBorderLine(i, j, new Piece(i, j), inputGrid);	
+				}
+				else {
+					PutPieceInTheCenter(i, j, new Piece(i, j), inputGrid);
+				}
+			}
+		}
+		filledGrid = Mixed(inputGrid);	
+		//créer un file qui contient la grille
+		try (Writer writer = new FileWriter(fileName, StandardCharsets.UTF_8);
+			BufferedWriter br = new BufferedWriter(writer);) {
+				br.write("Width of the grid w :" + filledGrid.getWidth());
+				br.newLine();  
+				br.write("Height of the grid h :" + filledGrid.getHeight());
+				br.newLine();  
+				for (int i = 0; i < filledGrid.getHeight(); i ++) {
+					for (int j = 0; i < filledGrid.getWidth(); j ++) {
+						//il faut rajouter la commande qui permet de chercher le type et l'orientation
+						br.write("Piece number" + ""+ "and Piece Orientation Number adjust" + ""); //
+						br.newLine();  
+					}
+				}
+				br.close(); 
+
+			} catch (FileNotFoundException e){
+				System.out.println("File Not Found");
+				
+			} catch (UnsupportedEncodingException e) {
+				throw new AssertionError("Unsupported Character Encoding Is Used");
+			}
 	}
 	
 	/**
@@ -174,6 +221,13 @@ public class Generator {
 	}//fin de PutPieceInCorner
 	
 	
+	/**
+	 * Placer les pièces sur les bordures de colonne
+	 * @param line
+	 * @param column
+	 * @param p
+	 * @param inputGrid
+	 */
 	public static void PutPieceInBorderColumn(int line, int column, Piece p, Grid inputGrid){
 		Random random = new Random();	
 		//colonne à gauche (premiere colonne, ligne sauf premire ligne et derniere ligne 
@@ -260,6 +314,13 @@ public class Generator {
 		inputGrid.setPiece(line, column, p);
 	}//fin de PutPieceInBordelColumn
 	
+	/**
+	 * Placer les pièces sur les bordures de lignes
+	 * @param line
+	 * @param column
+	 * @param p
+	 * @param inputGrid
+	 */
 	public static void PutPieceInBorderLine(int line, int column, Piece p, Grid inputGrid){
 		Random random = new Random();	
 		//ligne du haut 
@@ -367,7 +428,13 @@ public class Generator {
 		inputGrid.setPiece(line, column, p);
 	}//fin de PutPieceInBordelLine
 	
-	
+	/**
+	 * Placer les pièces centrales 
+	 * @param line
+	 * @param column
+	 * @param p
+	 * @param inputGrid
+	 */
 	public static void PutPieceInTheCenter(int line, int column, Piece p, Grid inputGrid){
 		Random random = new Random();	
 		//EAST TRUE SOUTH TRUE
