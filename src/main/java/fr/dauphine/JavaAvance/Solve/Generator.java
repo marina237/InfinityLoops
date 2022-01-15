@@ -111,9 +111,8 @@ public class Generator {
 							/**il faut rajouter la commande qui permet de chercher le type et l'orientation
 							 * Ordinal() nous permet de recuperer la position de sa declaration dans l enumeration
 							 */
-							br.write(inputGrid.getPiece(i, j).getType().ordinal() + " "); //
-							br.newLine();
-							br.write(inputGrid.getPiece(i, j).getOrientation().ordinal()+" ");
+							//il faut rajouter la commande qui permet de chercher le type et l'orientation
+							br.write(filledGrid.getPiece(i, j).getType().ordinal() + " " + filledGrid.getPiece(i, j).getOrientation().ordinal()); 
 						}
 					}
 					br.close(); 
