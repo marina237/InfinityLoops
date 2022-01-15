@@ -100,6 +100,13 @@ public class Main {
             inputFile = cmd.getOptionValue( "c" );
             boolean solved = false; 
             
+         // load grid from inputFile and check if it is solved : fait 
+            try {
+				solved = Checker.isSolution(inputFile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
           
             System.out.println("SOLVED: " + solved);           
         }
