@@ -107,49 +107,6 @@ public class Solver {
 		
 		
 		
-		
-		
-		
-		
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -157,9 +114,99 @@ public class Solver {
 
 		// To be implemented
 		
-		
 
 	}
+	
+	/**
+	 * Solver utilisant la méthode Backtracking 
+	 * Pas fini...
+	 * @param grid
+	 * @return
+	 */
+	public static boolean Backtracking(Grid grid) {
+		boolean checkgrid = false; 
+
+		
+		if (Checker.isSolution(grid)) {
+			checkgrid = true; 
+			return checkgrid;
+		}
+		
+		//fixer les pièces possibles
+		for (int i = 0; i < grid.getHeight(); i++) {
+			for (int j = 0; j < grid.getWidth(); j++) {
+				PieceNotToBeTested(grid, grid.getPiece(i, j));
+				PieceNotToBeTestedIfNeighborsAreFixed(grid, grid.getPiece(i, j));
+			}
+		}
+		
+		//on cree notre pile
+		ArrayDeque<Piece> stack = new ArrayDeque<>(); // dans l'import
+		
+		//On commence par la ligne 0
+		Piece p = grid.getPiece(0, 0);
+		
+		//si la pièce est de type void on ne la teste pas 
+		while (p.getType() == PieceType.VOID) {
+			p = grid.getNextPiece(p);
+		}
+		return checkgrid;
+
+	}
+	
+	/**
+	 * Solver utilisant la méthode récursive Ligne par ligne
+	 * @param grid
+	 * @return
+	 */
+	public static boolean RecursiveSolver(int PosX, int PosY, Grid grid) {
+		
+		boolean checkgrid = false; 
+		
+		
+		if (Checker.isSolution(grid)) {
+			checkgrid = true;
+			return checkgrid;
+		}
+		
+		//fixer les pièces possibles
+		for (int i = 0; i < grid.getHeight(); i++) {
+			for (int j = 0; j < grid.getWidth(); j++) {
+				PieceNotToBeTested(grid, grid.getPiece(i, j));
+				PieceNotToBeTestedIfNeighborsAreFixed(grid, grid.getPiece(i, j));
+			}
+		}
+		
+		for (int i = 0; i < grid.getHeight(); i++) {
+			for (int j = 0; j < grid.getWidth(); j++) {
+				Piece p = grid.getPiece(i, j);
+				
+				//on commence par la ligne 0 et la colonne 0 (corner en haut à gauche) 
+				if(p.getPosX() == 0 && p.getPosY() ==0) {
+					//on a 4 orientations possibles
+					for (int n = 0; n < 5; n ++) {
+						p.setOrientation(n);// on tourne la piece pour essayer de trouver une solution
+						if (Checker.isSolution(grid)) {
+							checkgrid = true;
+						}
+						else {
+							checkgrid = false;
+						}
+					}
+					return checkgrid;
+				}
+				
+				/*else if(p.getPosX() != 0 && p.getPosY() == 0) {
+					
+				}*/
+				
+			}
+
+		}
+		
+		return checkgrid;
+	}
+	
 	
 	/**
 	 * Choice the piece to be tested 

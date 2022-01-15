@@ -60,10 +60,8 @@ public class Main {
             if(! cmd.hasOption("o")) throw new ParseException("Missing mandatory --output argument.");
             outputFile = cmd.getOptionValue( "o" );
 
-            // generate grid and store it to outputFile...
+            // generate grid and store it to outputFile... (fait)
             //...            
-            
-            
             Grid g = new Grid(height,width);
             
             
@@ -89,8 +87,15 @@ public class Main {
             outputFile = cmd.getOptionValue( "o" );
             boolean solved = false; 
         
-            // load grid from inputFile, solve it and store result to outputFile...
+            // load grid from inputFile, solve it and store result to outputFile... ()
             // ...
+           /* try {
+				solved = Solver.RecursiveSolver();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+          
             
             System.out.println("SOLVED: " + solved);            
         }
