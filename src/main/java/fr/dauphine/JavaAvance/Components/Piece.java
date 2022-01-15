@@ -1,6 +1,7 @@
 package fr.dauphine.JavaAvance.Components;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -167,5 +168,7 @@ public class Piece {
 		s += " Orientation / " + this.getOrientation();
 		return s;
 	}
+
+
 
 }

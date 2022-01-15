@@ -28,7 +28,7 @@ public class Main {
 	private static Integer nbThread = 1;
 	private static Integer algo = 2;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Options options = new Options();
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = null;
@@ -53,30 +53,44 @@ public class Main {
                 
     try{    
         if( cmd.hasOption( "g" ) ) {
-            System.out.println("Running phineloop generator.");
+            System.out.println("Running phineloop generator MM.");
             String[] gridformat = cmd.getOptionValue( "g" ).split("x");
             width = Integer.parseInt(gridformat[0]);
             height = Integer.parseInt(gridformat[1]); 
             if(! cmd.hasOption("o")) throw new ParseException("Missing mandatory --output argument.");
             outputFile = cmd.getOptionValue( "o" );
-            
-            
+
             // generate grid and store it to outputFile...
-            //...         
+            //...            
+            
+            
+            Grid g = new Grid(height,width);
+            
+            
+            try {
+				Generator.generateLevel(outputFile, g);
+				
+				//Generator.Mixed(g);
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
+            GUI gui = new GUI(g); 
             
            
+           while(true);
         }
         else if( cmd.hasOption( "s" ) ) {
-            System.out.println("Running phineloop solver.");
+            System.out.println("Running phineloop solver by Myriam and Marina.");
             inputFile = cmd.getOptionValue( "s" );
             if(! cmd.hasOption("o")) throw new ParseException("Missing mandatory --output argument.");      
             outputFile = cmd.getOptionValue( "o" );
             boolean solved = false; 
-                    
+        
             // load grid from inputFile, solve it and store result to outputFile...
             // ...
-            
-            
             
             System.out.println("SOLVED: " + solved);            
         }
@@ -86,14 +100,7 @@ public class Main {
             inputFile = cmd.getOptionValue( "c" );
             boolean solved = false; 
             
-            // load grid from inputFile and check if it is solved... 
-            
-            try {
-				solved = Checker.isSolution(inputFile);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+          
             System.out.println("SOLVED: " + solved);           
         }
         else {

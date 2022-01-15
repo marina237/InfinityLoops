@@ -8,11 +8,15 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Random;
 
+import fr.dauphine.JavaAvance.Components.Orientation;
 import fr.dauphine.JavaAvance.Components.Piece;
 import fr.dauphine.JavaAvance.Components.PieceType;
+import fr.dauphine.JavaAvance.GUI.GUI;
 import fr.dauphine.JavaAvance.GUI.Grid;
 
 /**
@@ -23,6 +27,10 @@ import fr.dauphine.JavaAvance.GUI.Grid;
 public class Generator {
 
 	private static Grid filledGrid;
+	
+
+	
+
 
 	/**
 	 * @param output
@@ -35,49 +43,97 @@ public class Generator {
 	 */
 	public static void generateLevel(String fileName, Grid inputGrid) throws IOException {
       
-		// To be implemented
-		for (int i = 0; i < inputGrid.getHeight(); i ++) {
-			for (int j = 0; i < inputGrid.getWidth(); j ++) {
+	
+			// To be implemented
+			for (int i = 0; i <inputGrid.getHeight(); i ++) {
+				for (int j = 0; j < inputGrid.getWidth(); j ++) {
+						
 				
-				if (inputGrid.isCorner(i, j) == true){
-					PutPieceInCorner(i, j, new Piece(i, j), inputGrid);
-				}
-				else if (inputGrid.isBorderColumn(i, j) == true ){
-					PutPieceInBorderColumn(i, j, new Piece(i, j), inputGrid);
-				}
-				else if(inputGrid.isBorderLine(i, j) == true) {
-					PutPieceInBorderLine(i, j, new Piece(i, j), inputGrid);	
-				}
-				else {
-					PutPieceInTheCenter(i, j, new Piece(i, j), inputGrid);
-				}
-			}
-		}
-		filledGrid = Mixed(inputGrid);	
-		//créer un file qui contient la grille
-		try (Writer writer = new FileWriter(fileName, StandardCharsets.UTF_8);
-			BufferedWriter br = new BufferedWriter(writer);) {
-				br.write("Width of the grid w :" + filledGrid.getWidth());
-				br.newLine();  
-				br.write("Height of the grid h :" + filledGrid.getHeight());
-				br.newLine();  
-				for (int i = 0; i < filledGrid.getHeight(); i ++) {
-					for (int j = 0; j < filledGrid.getWidth(); j ++) {
-						//il faut rajouter la commande qui permet de chercher le type et l'orientation
-						br.write("Piece number" + ""+ "and Piece Orientation Number adjust" + ""); //
-						br.newLine();  
-					}
-				}
-				br.close(); 
 
-			} catch (FileNotFoundException e){
-				System.out.println("File Not Found");
+					
+					if (inputGrid.isCorner(i, j)) {
+						PutPieceInCorner(i, j, new Piece(i, j), inputGrid) ;
+						System.out.println("isCorner True"+i+j+inputGrid.getPiece(i, j));
+					}
+						
 				
-			} catch (UnsupportedEncodingException e) {
-				throw new AssertionError("Unsupported Character Encoding Is Used");
+						
+					
+					
+					
+					if (inputGrid.isBorderColumn(i, j)  ) {
+						PutPieceInBorderColumn(i, j, new Piece(i,j), inputGrid);
+						System.out.println("BorderColumn"+i+j+inputGrid.getPiece(i, j));
+					}
+						
+	 		
+					if(inputGrid.isBorderLine(i, j)) {
+						
+						PutPieceInBorderLine(i, j, new Piece(i, j), inputGrid);
+						System.out.println("BorderLine"+i+j+inputGrid.getPiece(i, j));
+					}
+										
+									
+	
+					else if(!inputGrid.isCorner(i, j) && !inputGrid.isBorderColumn(i, j) && !inputGrid.isBorderLine(i, j) ) {
+						PutPieceInTheCenter(i, j, new Piece(i, j), inputGrid);
+						System.out.println("center"+i+j+inputGrid.getPiece(i, j));
+
+					}
+		
+					
+						
+				
+							
+				}
+				
 			}
+					
+				
+					
+					
+				
+			
+			filledGrid = Mixed(inputGrid);
+			
+			
+		
+			
+			//créer un file qui contient la grille
+			try (Writer writer = new FileWriter(fileName, StandardCharsets.UTF_8);
+				BufferedWriter br = new BufferedWriter(writer);) {
+					br.write("Width of the grid w :" + filledGrid.getWidth());
+					br.newLine();  
+					br.write("Height of the grid h :" + filledGrid.getHeight());
+					br.newLine();  
+					for (int i = 0; i < filledGrid.getHeight(); i ++) {
+						for (int j = 0; j < filledGrid.getWidth(); j ++) {
+							/**il faut rajouter la commande qui permet de chercher le type et l'orientation
+							 * Ordinal() nous permet de recuperer la position de sa declaration dans l enumeration
+							 */
+							br.write(inputGrid.getPiece(i, j).getType().ordinal() + " "); //
+							br.newLine();
+							br.write(inputGrid.getPiece(i, j).getOrientation().ordinal()+" ");
+						}
+					}
+					br.close(); 
+	
+				} catch (FileNotFoundException e){
+					System.out.println("File Not Found");
+					
+				} catch (UnsupportedEncodingException e) {
+					throw new AssertionError("Unsupported Character Encoding Is Used");
+				}
+		
 	}
 	
+	/**
+	 * Placer les pièces dans les différents coins
+	 * @param line
+	 * @param column
+	 * @param p
+	 * @param inputGrid
+	 */
 	/**
 	 * Placer les pièces dans les différents coins
 	 * @param line
@@ -137,7 +193,7 @@ public class Generator {
 						break;
 				}
 			}
-			else {
+			else if (inputGrid.getPiece(line, column - 1).hasRightConnector() == false) {
 				EnumSet<PieceType> right_up_east_false = EnumSet.of(PieceType.ONECONN, PieceType.VOID);			
 				p.setType((PieceType) right_up_east_false.toArray()[random.nextInt(right_up_east_false.toArray().length)]);
 				switch(p.getType()){
@@ -175,7 +231,7 @@ public class Generator {
 						break;
 				}
 			}
-			else {				
+			else if (inputGrid.getPiece(line -1 , column).hasBottomConnector() == false) {				
 				EnumSet<PieceType> left_down_south_false = EnumSet.of(PieceType.ONECONN, PieceType.VOID);			
 				p.setType((PieceType) left_down_south_false.toArray()[random.nextInt(left_down_south_false.toArray().length)]);
 				switch(p.getType()){
@@ -195,7 +251,7 @@ public class Generator {
 		}
 		
 		//Cas coin en bas à droite
-		else if (line == inputGrid.getHeight() && column == inputGrid.getWidth() - 1){
+		else if (line == inputGrid.getHeight() -1 && column == inputGrid.getWidth() - 1){//j'ai modifié ici
 			if (inputGrid.getPiece(line, column - 1).hasRightConnector() == true){//EST right 
 				if (inputGrid.getPiece(line -1, column).hasBottomConnector() == true) {
 					p.setType(PieceType.LTYPE);
@@ -218,7 +274,7 @@ public class Generator {
 			}
 		}
 			inputGrid.setPiece(line, column, p);
-	}//fin de PutPieceInCorner
+	}//fin de PutPieceInCorner//fin de PutPieceInCorner
 	
 	
 	/**
@@ -259,7 +315,7 @@ public class Generator {
 						p.setOrientation(1);
 						break; 
 					case VOID : 
-						p.setOrientation(1);
+						p.setOrientation(0);
 						break;
 					default :
 						break;
@@ -395,7 +451,7 @@ public class Generator {
 					}
 				}
 			}//EAST FALSE AND SOUTH TRUE
-			else if (inputGrid.getPiece(line, column - 1).hasRightConnector() == false){
+			else if (inputGrid.getPiece(line, column - 1).hasRightConnector() == false ){
 				if (inputGrid.getPiece(line - 1, column).hasBottomConnector() == true){
 					EnumSet<PieceType> line_down_east_false_south_true = EnumSet.of(PieceType.ONECONN, PieceType.LTYPE);			
 					p.setType((PieceType) line_down_east_false_south_true.toArray()[random.nextInt(line_down_east_false_south_true.toArray().length)]);
@@ -438,6 +494,8 @@ public class Generator {
 	public static void PutPieceInTheCenter(int line, int column, Piece p, Grid inputGrid){
 		Random random = new Random();	
 		//EAST TRUE SOUTH TRUE
+		if (column > 0 && line > 0 && line < inputGrid.getWidth() -1 && column < inputGrid.getHeight()-1  ){
+
 		if (inputGrid.getPiece(line, column - 1).hasRightConnector() == true){ //east
 			if (inputGrid.getPiece(line - 1, column).hasBottomConnector() == true) { //south 
 				EnumSet<PieceType> center_east_true_south_true = EnumSet.of(PieceType.TTYPE, PieceType.LTYPE, PieceType.FOURCONN);			
@@ -447,7 +505,7 @@ public class Generator {
 						//0 for 0  et 1 for 3 
 						if (random.nextInt((2-0) + 0) == 0) {//nombre entre 0(inclus) et 2(exclu) donc entre 0 et 1 
 							p.setOrientation(0);
-						}else {p.setOrientation(3);}
+						} else {p.setOrientation(3);}
 						break; 
 					case LTYPE :
 						p.setOrientation(3);
@@ -499,7 +557,7 @@ public class Generator {
 			}
 			//EAST FALSE SOUTH FALSE 
 			else if (inputGrid.getPiece(line - 1, column).hasBottomConnector() == false){
-				EnumSet<PieceType> center_east_false_south_false = EnumSet.of(PieceType.ONECONN, PieceType.LTYPE);			
+				EnumSet<PieceType> center_east_false_south_false = EnumSet.of(PieceType.ONECONN, PieceType.LTYPE, PieceType.VOID);			
 				p.setType((PieceType) center_east_false_south_false.toArray()[random.nextInt(center_east_false_south_false.toArray().length)]);
 				switch(p.getType()){
 					case ONECONN :
@@ -508,14 +566,17 @@ public class Generator {
 					case LTYPE : 
 						p.setOrientation(1);
 						break;	
+					case VOID : 
+						p.setOrientation(0);
 					default : 
 						break;
 				}	
 			}
 		}
 		inputGrid.setPiece(line, column, p);
-	}//fin de PutPieceInTheCenter
-	
+		}
+	}//fin de PutPieceInTheCenter//fin de PutPieceInTheCenter
+
 	/**
 	 * Permet de mélanger les pièces après avoir générer un niveau
 	 * @param grid
@@ -534,6 +595,14 @@ public class Generator {
 		}		
 	return grid;
 	} 
+	
+	/**public static void initGrid(Grid grid) {
+		for (int i = 0; i < grid.getHeight(); ++i) {
+			for (int j = 0; j <grid.getWidth(); ++j) {
+				grid.setPiece(i, j, new Piece(i, j));
+			}
+		}
+	}**/
 	
 	
 	public static int[] copyGrid(Grid filledGrid, Grid inputGrid, int i, int j) {
@@ -567,5 +636,9 @@ public class Generator {
 		//DEBUGSystem.out.println("tmpi =" + tmpi + " & tmpj = " + tmpj);
 		return new int[] { tmpi, tmpj };
 	}
+
+	
+	
+	
 
 }

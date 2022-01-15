@@ -78,7 +78,7 @@ ArrayList<Orientation> getListOfPossibleOri() {
 			O.add(n);
 			break;	
 		default :
-			throw new IllegalArgumentException("Ce type de pi�ce n'existe pas");
+			throw new IllegalArgumentException("Ce type de piece n'existe pas");
 	 	}
 	 	return O;
 	 }

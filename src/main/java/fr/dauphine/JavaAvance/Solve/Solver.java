@@ -2,7 +2,9 @@ package fr.dauphine.JavaAvance.Solve;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
+import java.util.Iterator;
 import java.util.Objects;
+import java.util.Stack;
 
 import fr.dauphine.JavaAvance.Components.Orientation;
 import fr.dauphine.JavaAvance.Components.Pair;
@@ -10,11 +12,168 @@ import fr.dauphine.JavaAvance.Components.Piece;
 import fr.dauphine.JavaAvance.Components.PieceType;
 import fr.dauphine.JavaAvance.GUI.Grid;
 
+import java.util.Stack;
+
 public class Solver {
+	
+	
+	/**
+	 * Champs
+	 * 
+	 */
+	
+	private Grid jeuInitial;
+	private int height;
+	
+	private int width;
+	
+	private Piece[][] pieces;
+	
+	private int compteur; 
+	
+	private Stack<Grid> pile = new Stack<>();
+	
+
+	/**
+	 * @param jeuInitial
+	 * @param height
+	 * @param width
+	 * @param pieces
+	 * @param compteur
+	 * @param pile
+	 */
+	public Solver(Grid jeuInitial) {
+		super();
+		this.jeuInitial = jeuInitial;
+		this.height = jeuInitial.getHeight();
+		this.width = jeuInitial.getWidth();
+		this.pieces = jeuInitial.getAllPieces();
+	
+	
+	}
+	
+	
+
+	
+	
+	public Grid solve() throws IOException{
+		
+		Grid etatInitial = new Grid(0, 0);
+		
+		
+		pile.push(etatInitial);
+		
+		
+		pile.push(jeuInitial);
+		
+		while(!pile.isEmpty()) {
+			
+			compteur++;
+			
+			Grid outc= pile.peek();
+			
+			int x = outc.getHeight();
+			
+			int y = outc.getWidth();
+			
+			
+			
+			Grid etatCourant = outc;
+			
+			if (Checker.isSolution(outc.toString())) {
+				
+				return etatCourant;
+			}
+			
+			
+			 for (int i = 0;i  < pieces.length;i ++) {
+				for (int j = 0; j < pieces.length; j++) {
+					
+					
+					
+					
+					
+					
+				}
+			}
+				
+				
+
+			}
+		return etatInitial;
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	public static void main(String[] args) {
 
 		// To be implemented
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 	}
 	

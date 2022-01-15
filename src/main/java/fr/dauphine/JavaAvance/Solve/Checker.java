@@ -41,6 +41,18 @@ public class Checker {
 		
 		return grid;
 	}
+
+	public static boolean isSolution(String inputFile) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public static boolean isSolution(Grid grid) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
 	
 	/**
 	 * 
@@ -49,19 +61,19 @@ public class Checker {
 	 * @return True if all the piece are connected, else it will return False
 	 * If all piece are connected it means that the game is solved
 	 */
-	public static boolean isSolution(String inputFile) throws IOException {
+	//public static boolean isSolution(String inputFile) throws IOException {
 		//en cours de construction
 		//utiliser isTotallyConnected dans grid 
-		/*for (Piece[] x : grid.getAllPieces()) {
-			for (Piece y :x) {
-				if (grid.isTotallyConnected(y) == true) {
-					return true; 
-			}
-		}
-	}*/
-		return false;
+		//for (Piece[] x : grid.getAllPieces()) {
+			//for (Piece y :x) {
+				//if (grid.isTotallyConnected(y) == true) {
+					//return true; 
+			//}
+		//}
+	//}*/
+		//return false;
 		
-	}
+	//}
 
 	
 }

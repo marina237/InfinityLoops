@@ -54,9 +54,12 @@ public class Grid {
 	public void setNbcc(int nbcc) {
 		this.nbcc = nbcc;
 	}
+	
+	
 
 	public Piece getPiece(int line, int column) {
-		return this.pieces[line][column];
+	
+		return this.pieces[line][ column];
 	}
 
 	public void setPiece(int line, int column, Piece piece) {
@@ -75,22 +78,52 @@ public class Grid {
 	 * @return true if the case is a corner
 	 */
 	public boolean isCorner(int line, int column) {
-		if (line == 0) {
-			if (column == 0)
+	
+		
+		if (line == 0 && column ==0) {
+			
+			return true;
+		}
+		if(line ==0 && column == (this.getWidth() - 1)) {
+			
+			return true;
+
+		}
+		
+	
+		 if(line == (this.getHeight()-1) && column == 0) {
+			return true;
+		}
+		 if (line == (this.getHeight()-1) && column == this.getWidth() - 1) {
+			return true;
+			
+		}else  {
+			return false;
+		}
+			
+	}
+		
+		/*}
+				
+
+		if (line == 0 ) {
+			if (column == 0) 
 				return true;
-			if (column == this.getWidth() - 1)
+			else if (column == this.getWidth() - 1)
 				return true;
 			return false;
-		} else if (line == this.getHeight() - 1) {
+		} 
+		
+		else if (line == this.getHeight() - 1) {
 			if (column == 0)
 				return true;
-			if (column == this.getWidth() - 1)
+			else if (column == this.getWidth() - 1)
 				return true;
 			return false;
 		} else {
 			return false;
 		}
-	}
+	}*/
 
 	/**
 	 * Check if a case is member of the first or the last line
@@ -550,6 +583,20 @@ public class Grid {
 			s += "\n";
 		}
 		return s;
+	}
+	
+	
+	public void displayGrid(){
+		for(int i = 0; i<this.getHeight(); i++) {
+			System.out.println("");
+			for(int j = 0; j<this.getWidth(); j++) {
+					
+				System.out.print("| "+this.getPiece(i, i).getType()+" |");
+				
+				
+			}
+		}
+		
 	}
 
 }
