@@ -136,7 +136,7 @@ public class GUI implements MouseListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("clicker le bouton solver");
+				System.out.println("Click on Solver");
 				JOptionPane.showMessageDialog(buttonsControl_panel, "Trying to solve... ");
 				
 			}
