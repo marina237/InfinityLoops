@@ -36,7 +36,7 @@ public class Checker {
 				Grid grid = new Grid(w, h); //generer la grille avec w et h 
 				
 				for (int i = 0; i < w ; i++ ) {
-					for (int j= 0 ; i < h; j ++) {
+					for (int j= 0 ; j < h; j ++) {
 						//en cours de construction
 						//le fichier est constuire avec sur chaque ligne pieceType PieceOrientation
 						//on veut recuperer ces valeurs 
